@@ -20,7 +20,8 @@ const pool = new Pool({
 console.log('hey whats up')
 const PORT = process.env.PORT || 5000
 
-
+require("./Book")
+const Book = mongoose.model("Book");
 
 
 express()
@@ -29,9 +30,27 @@ express()
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
   .post('/book', (req, res) => { 
-    console.log(`about to print req.body for book post`)
-    console.log(req.body)
-    res.send("Testing our book route!");
+    var newBook = {
+      title: req.body.title,
+      // title = "asdf",
+      author: req.body.author,
+      numberPages: req.body.numberPages,
+      publisher: req.body.publisher
+    }
+
+    var book = new Book(newBook);
+
+    book.save().then(() => {
+      console.log('new book created')
+    }).catch((err) => {
+        if(err) {
+          throw err;
+        }
+    })
+    res.send("a new book created with success");
+    // console.log(`about to print req.body for book post`)
+    // console.log(req.body)
+    // res.send("Testing our book route!");
   })
   .get('/', (req, res) => res.render('pages/index'))
   .get('/db', async (req, res) => {
