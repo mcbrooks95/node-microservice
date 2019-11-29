@@ -24,7 +24,13 @@ express()
       console.log(results)
       console.log(result)
       res.render('pages/db', results );
+      console.log(`about to print results`)
+      console.log(results)
+      console.log(result)
       client.release();
+      console.log(`about to print results`)
+      console.log(results)
+      console.log(result)
     } catch (err) {
       console.error(err);
       res.send("Error " + err);
