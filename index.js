@@ -2,6 +2,7 @@ const cool = require('cool-ascii-faces')
 const express = require('express')
 const path = require('path')
 const { Pool } = require('pg');
+const mongoose = require('mongoose');
 const pool = new Pool({
   // connectionString: process.env.DATABASE_URL,
   // connectionString: "postgres://sfpbzylfgkxmwn:1c05515cd61b6f52018402d488250ce850be16a115c401af8988f6e40005b89b@localhost:5432/d31sdj5qhk8k8s",
