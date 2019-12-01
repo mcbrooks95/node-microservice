@@ -32,7 +32,6 @@ express()
   .post('/book', (req, res) => { 
     var newBook = {
       title: req.body.title,
-      // title = "asdf",
       author: req.body.author,
       numberPages: req.body.numberPages,
       publisher: req.body.publisher
@@ -48,16 +47,10 @@ express()
         }
     })
     res.send("a new book created with success");
-    // console.log(`about to print req.body for book post`)
-    // console.log(req.body)
-    // res.send("Testing our book route!");
   })
   .get('/', (req, res) => res.render('pages/index'))
   .get('/books', (req, res) => { 
     Book.find().then((books) => {
-      console.log("about to print books")
-      console.log(books)
-      // res.send(books);
       res.json(books);
     })
   })
@@ -82,18 +75,8 @@ express()
       const client = await pool.connect()
       const result = await client.query('SELECT * FROM test_table');
       const results = { 'results': (result) ? result.rows : null};
-      console.log(`about to print results`)
-      // alert(results);
-      console.log(results)
-      console.log(result)
       res.render('pages/db', results );
-      console.log(`about to print results`)
-      console.log(results)
-      console.log(result)
       client.release();
-      console.log(`about to print results`)
-      console.log(results)
-      console.log(result)
     } catch (err) {
       console.error(err);
       res.send("Error " + err);
