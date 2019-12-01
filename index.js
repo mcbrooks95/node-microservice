@@ -53,6 +53,14 @@ express()
     // res.send("Testing our book route!");
   })
   .get('/', (req, res) => res.render('pages/index'))
+  .get('/books', (req, res) => { 
+    Book.find().then((books) => {
+      console.log("about to print books")
+      console.log(books)
+      // res.send(books);
+      res.json(books);
+    })
+  })
   .get('/db', async (req, res) => {
     try {
       const client = await pool.connect()
