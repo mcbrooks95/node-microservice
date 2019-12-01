@@ -35,6 +35,25 @@ express()
       res.json(books);
     })
   })
+  .get('/book/:id', (req, res) => { 
+
+
+    Book.findById(req.params.id).then((book) => {
+        if(book) {
+          res.json(book);
+        }
+        else
+        {
+          res.sendStatus(404);
+        }
+    }).catch((err) => {
+        if(err) {
+          throw err;
+        }
+    })
+
+
+  })
   .post('/book', (req, res) => { 
       var newBook = {
         title: req.body.title,
