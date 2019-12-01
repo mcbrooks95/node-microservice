@@ -61,6 +61,22 @@ express()
       res.json(books);
     })
   })
+  .post('/book', (req, res) => { 
+      var newBook = {
+        title: req.body.title,
+        author: req.body.author,
+        numberPages: req.body.numberPages,
+        publisher: req.body.publisher
+      }
+
+      var book = new Book(newBook);
+
+      book.save().then(() => {
+        console.log("new book created")
+      })
+
+      res.send("a new book created with success!")
+  })
   .get('/db', async (req, res) => {
     try {
       const client = await pool.connect()
