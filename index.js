@@ -4,13 +4,14 @@ const path = require('path')
 const { Pool } = require('pg');
 const bodyParser = require(`body-parser`);
 const mongoose = require('mongoose');
+// const customers = require("./customers/customers");
 
-// mongoose.connect("mongodb+srv://testuser:testpassword@cluster0-fnurh.mongodb.net/test", () => {
-//   console.log("database is connected!");
-// })
-mongoose.connect("mongodb+srv://testuser:testpassword@cluster0-fnurh.mongodb.net/customers", () => {
-  console.log("database is connected to customers!");
+mongoose.connect("mongodb+srv://testuser:testpassword@cluster0-fnurh.mongodb.net/test", () => {
+  console.log("database is connected!");
 })
+// mongoose.connect("mongodb+srv://testuser:testpassword@cluster0-fnurh.mongodb.net/customers", () => {
+//   console.log("database is connected to customers!");
+// })
 const pool = new Pool({
   // connectionString: process.env.DATABASE_URL,
   // connectionString: "postgres://sfpbzylfgkxmwn:1c05515cd61b6f52018402d488250ce850be16a115c401af8988f6e40005b89b@localhost:5432/d31sdj5qhk8k8s",
@@ -28,6 +29,7 @@ const Book = mongoose.model("Book");
 
 
 express()
+  // .use(customers)
   .use(express.static(path.join(__dirname, 'public')))
   .use(bodyParser.json())
   .set('views', path.join(__dirname, 'views'))
