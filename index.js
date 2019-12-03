@@ -5,8 +5,11 @@ const { Pool } = require('pg');
 const bodyParser = require(`body-parser`);
 const mongoose = require('mongoose');
 
-mongoose.connect("mongodb+srv://testuser:testpassword@cluster0-fnurh.mongodb.net/test", () => {
-  console.log("database is connected!");
+// mongoose.connect("mongodb+srv://testuser:testpassword@cluster0-fnurh.mongodb.net/test", () => {
+//   console.log("database is connected!");
+// })
+mongoose.connect("mongodb+srv://testuser:testpassword@cluster0-fnurh.mongodb.net/customers", () => {
+  console.log("database is connected to customers!");
 })
 const pool = new Pool({
   // connectionString: process.env.DATABASE_URL,
