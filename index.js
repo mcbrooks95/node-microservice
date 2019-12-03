@@ -30,14 +30,21 @@ express()
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.render('pages/index'))
+  .delete('/book/:id', (req, res) => { 
+    Book.findOneAndRemove(req.params.id).then(() => {
+        res.send("Book has been successfully removed!")
+    })
+  })
   .get('/books', (req, res) => { 
     Book.find().then((books) => {
       res.json(books);
+    }).catch((err) => {
+      if(err) {
+        throw err;
+      }
     })
   })
   .get('/book/:id', (req, res) => { 
-
-
     Book.findById(req.params.id).then((book) => {
         if(book) {
           res.json(book);
@@ -51,8 +58,6 @@ express()
           throw err;
         }
     })
-
-
   })
   .post('/book', (req, res) => { 
       var newBook = {
