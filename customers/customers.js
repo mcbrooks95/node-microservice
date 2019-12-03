@@ -1,5 +1,6 @@
 const express = require("express")
 const app = express();
+const mongoose = require("mongoose");
 
 
 mongoose.connect("mongodb+srv://testuser:testpassword@cluster0-fnurh.mongodb.net/customers", () => {
