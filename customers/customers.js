@@ -44,6 +44,24 @@ app.get('/customers', (req, res) => {
     })
 })
 
+
+app .get('/customer/:id', (req, res) => { 
+    Customer.findById(req.params.id).then((customer) => {
+        if(customer) {
+            res.json(customer);
+        }
+        else
+        {
+            res.sendStatus("wrong status id sorry!!");
+        }
+    }).catch((err) => {
+        if(err) {
+            res.send("sorry something went wrong")
+            throw err;
+        }
+    })
+})
+
 require("./Customer")
 const Customer = mongoose.model("Customer");
 
