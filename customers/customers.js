@@ -62,6 +62,12 @@ app .get('/customer/:id', (req, res) => {
     })
 })
 
+app.delete('/customer/:id', (req, res) => { 
+    Customer.findOneAndRemove(req.params.id).then(() => {
+        res.send("Customer has been successfully removed!")
+    })
+})
+
 require("./Customer")
 const Customer = mongoose.model("Customer");
 
