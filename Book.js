@@ -4,18 +4,18 @@ mongoose.model("Book", {
 
     title: {
       type: String,
-      require: true
+      required: true
     },
     author: {
       type: String,
-      require: true
+      required: true
     },
     numberPages: {
       type: Number,
-      require: false
+      required: false
     },
     publisher: {
       type: String,
-      require: false
+      required: false
     },
 });
