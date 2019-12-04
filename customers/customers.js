@@ -33,6 +33,17 @@ app.post('/customer', (req, res) => {
     res.send("a new customer created with success!")
 })
 
+
+app.get('/customers', (req, res) => {
+    Customer.find().then((customers) => {
+        res.json(customers)
+    }).catch((err) => {
+        if(err) {
+            throw err;
+        }
+    })
+})
+
 require("./Customer")
 const Customer = mongoose.model("Customer");
 
