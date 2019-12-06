@@ -9,15 +9,6 @@ const Order = mongoose.model("Order");
 
 router.use(bodyParser.json());
 
-// define the home page route
-// router.get('/', function (req, res) {
-//     res.send('Birds home page')
-// })
-// // define the about route
-// router.get('/about', function (req, res) {
-//     res.send('About birds')
-// })
-
 router.get('/orders', (req, res) => {
     Order.find().then((orders) => {
         res.json(orders)
