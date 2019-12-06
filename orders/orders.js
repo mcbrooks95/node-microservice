@@ -5,7 +5,11 @@ const bodyParser = require("body-parser");
 
 app.use(bodyParser.json());
 
-mongoose.connect("mongodb+srv://testuser:testpassword@cluster0-fnurh.mongodb.net/orders", () => {
+// mongoose.connect("mongodb+srv://testuser:testpassword@cluster0-fnurh.mongodb.net/orders", () => {
+//   console.log("database is connected to orders!!");
+// })
+
+mongoose.connect("mongodb+srv://testuser:testpassword@cluster0-fnurh.mongodb.net/test", () => {
   console.log("database is connected to orders!!");
 })
 // mongodb+srv://testuser:<password>@cluster0-fnurh.mongodb.net/test
