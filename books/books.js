@@ -2,13 +2,11 @@ const express = require("express")
 const app = express.Router();
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+require("./Book")
+const Book = mongoose.model("Book");
 
 app.use(bodyParser.json());
 
-const PORT = process.env.PORT || 5000
-
-require("./Book")
-const Book = mongoose.model("Book");
 
 app.post('/book', (req, res) => { 
     var newBook = {

@@ -2,21 +2,10 @@ const express = require("express")
 const app = express.Router();
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-
-app.use(bodyParser.json());
-
-mongoose.connect("mongodb+srv://testuser:testpassword@cluster0-fnurh.mongodb.net/test", () => {
-  console.log("database is connected to orders!!");
-})
-
-const PORT = process.env.PORT || 5000
-
 require("./Order")
 const Order = mongoose.model("Order");
 
-// app.listen(PORT, () => { 
-//     console.log(`orders is working on ${ PORT }`)
-// })
+app.use(bodyParser.json());
 
 app.post('/order', (req, res) => { 
     var newOrder = {

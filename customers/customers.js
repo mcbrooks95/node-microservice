@@ -2,15 +2,10 @@ const express = require("express")
 const app = express.Router();
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+require("./Customer")
+const Customer = mongoose.model("Customer");
 
 app.use(bodyParser.json());
-
-mongoose.connect("mongodb+srv://testuser:testpassword@cluster0-fnurh.mongodb.net/test", () => {
-  console.log("database is connected to customersssss!!");
-})
-
-const PORT = process.env.PORT || 5000
-
 
 app.post('/customer', (req, res) => { 
     var newCustomer = {
@@ -44,7 +39,7 @@ app.get('/customers', (req, res) => {
 })
 
 
-app .get('/customer/:id', (req, res) => { 
+app.get('/customer/:id', (req, res) => { 
     Customer.findById(req.params.id).then((customer) => {
         if(customer) {
             res.json(customer);
@@ -66,9 +61,5 @@ app.delete('/customer/:id', (req, res) => {
         res.send("Customer has been successfully removed!")
     })
 })
-
-require("./Customer")
-const Customer = mongoose.model("Customer");
-
 
 module.exports = app;
