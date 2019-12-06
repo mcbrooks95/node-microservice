@@ -19,6 +19,10 @@ const PORT = process.env.PORT || 5000
 require("./Order")
 const Order = mongoose.model("Order");
 
+app.listen(PORT, () => { 
+    console.log(`orders is working on ${ PORT }`)
+})
+
 app.post('/order', (req, res) => { 
     var newOrder = {
         CustomerID: req.body.CustomerID,
@@ -43,12 +47,6 @@ app.post('/order', (req, res) => {
 
     res.send("a new order created with success!")
 })
-
-app.listen(PORT, () => { 
-    console.log(`orders is working on ${ PORT }`)
-})
-
-
 
 app.get('/orders', (req, res) => {
     Order.find().then((orders) => {
