@@ -3,8 +3,8 @@ const express = require('express')
 const path = require('path')
 const bodyParser = require(`body-parser`);
 const mongoose = require('mongoose');
-var orders2 = require('./orders/orders2');
 var orders = require('./orders/orders');
+var customers = require('./customers/customers');
 
 mongoose.connect("mongodb+srv://testuser:testpassword@cluster0-fnurh.mongodb.net/test", () => {
   console.log("database is connected!");
@@ -24,6 +24,7 @@ express()
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.render('pages/index'))
   .use('/', orders)
+  .use('/', customers)
   .delete('/book/:id', (req, res) => { 
     Book.findOneAndRemove(req.params.id).then(() => {
         res.send("Book has been successfully removed!")

@@ -1,5 +1,5 @@
 const express = require("express")
-const app = express();
+const app = express.Router();
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 
@@ -71,6 +71,4 @@ require("./Customer")
 const Customer = mongoose.model("Customer");
 
 
-app.listen(PORT, () => { 
-    console.log(`customers is working on ${ PORT }`)
-})
+module.exports = app;
