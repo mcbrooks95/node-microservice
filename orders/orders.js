@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 
 app.use(bodyParser.json());
 
-mongoose.connect("mongodb+srv://testuser:testpassword@cluster0-fnurh.mongodb.net/test", () => {
+mongoose.connect("mongodb+srv://testuser:testpassword@cluster0-fnurh.mongodb.net/orders", () => {
   console.log("database is connected to orders!!");
 })
 // mongodb+srv://testuser:<password>@cluster0-fnurh.mongodb.net/test
@@ -15,30 +15,35 @@ const PORT = process.env.PORT || 5000
 require("./Order")
 const Order = mongoose.model("Order");
 
+app.post('/order', (req, res) => { 
+    var newOrder = {
+        CustomerID: req.body.CustomerID,
+        BookID: req.body.BookID,
+        initialDate: req.body.initialDate,
+        deliveryDate: req.body.deliveryDate
+        // CustomerID: "5de72cc3e04f4f45804c9ca2",
+        // BookID: "5de16ef0d1639607e4e1dd22",
+        // initialDate: "2019-01-31",
+        // deliveryDate: "2019-03-30"
+    }
+
+    var order = new Order(newOrder);
+
+    order.save().then(() => {
+      console.log("new order created")
+    }).catch(err => {
+        if(err) {
+            throw err;
+        }
+    })
+
+    res.send("a new order created with success!")
+})
 
 app.listen(PORT, () => { 
     console.log(`orders is working on ${ PORT }`)
 })
 
-// app.post('/order', (req, res) => { 
-//     var newCustomer = {
-//       name: req.body.name,
-//       age: req.body.age,
-//       address: req.body.address
-//     }
-
-//     var customer = new Customer(newCustomer);
-
-//     customer.save().then(() => {
-//       console.log("new order created")
-//     }).catch(err => {
-//         if(err) {
-//             throw err;
-//         }
-//     })
-
-//     res.send("a new order created with success!")
-// })
 
 
 // app.get('/customers', (req, res) => {

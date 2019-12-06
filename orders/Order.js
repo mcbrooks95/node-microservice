@@ -3,11 +3,13 @@ const mongoose = require("mongoose");
 mongoose.model("Order", {
 
     CustomerID: {
-        type: mongoose.SchemaTypes.CustomerID,
+        type: String,
+        // type: mongoose.SchemaTypes.CustomerID,
         required: true
     },
     BookID: {
-        type: mongoose.SchemaTypes.BookID,
+        type: String,
+        // type: mongoose.SchemaTypes.BookID,
         required: true
     },
     initialDate: {
