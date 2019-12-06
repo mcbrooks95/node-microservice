@@ -1,5 +1,5 @@
 const express = require("express")
-const app = express();
+const app = express.Router();
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 
@@ -14,9 +14,9 @@ const PORT = process.env.PORT || 5000
 require("./Order")
 const Order = mongoose.model("Order");
 
-app.listen(PORT, () => { 
-    console.log(`orders is working on ${ PORT }`)
-})
+// app.listen(PORT, () => { 
+//     console.log(`orders is working on ${ PORT }`)
+// })
 
 app.post('/order', (req, res) => { 
     var newOrder = {
@@ -51,3 +51,5 @@ app.delete('/order/:id', (req, res) => {
         res.send("Order has been successfully removed!")
     })
 })
+
+module.exports = app;
