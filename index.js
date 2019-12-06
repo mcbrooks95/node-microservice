@@ -1,4 +1,3 @@
-const cool = require('cool-ascii-faces')
 const express = require('express')
 const path = require('path')
 const bodyParser = require(`body-parser`);
@@ -22,16 +21,4 @@ express()
   .use('/', orders)
   .use('/', customers)
   .use('/', books)
-  .get('/times', (req, res) => res.send(showTimes()))
-  .get('/cool', (req, res) => res.send(cool()))
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
-
-
-showTimes = () => {
-  let result = ''
-  const times = process.env.TIMES || 5
-  for (i = 0; i < times; i++) {
-    result += i + ' fds '
-  }
-  return result;
-}
