@@ -5,18 +5,10 @@ const bodyParser = require("body-parser");
 
 app.use(bodyParser.json());
 
-mongoose.connect("mongodb+srv://testuser:testpassword@cluster0-fnurh.mongodb.net/test", () => {
-  console.log("database is connected to books!!");
-})
-
 const PORT = process.env.PORT || 5000
 
 require("./Book")
 const Book = mongoose.model("Book");
-
-// app.listen(PORT, () => { 
-//     console.log(`orders is working on ${ PORT }`)
-// })
 
 app.post('/book', (req, res) => { 
     var newBook = {
