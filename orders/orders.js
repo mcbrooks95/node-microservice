@@ -46,15 +46,21 @@ app.listen(PORT, () => {
 
 
 
-// app.get('/customers', (req, res) => {
-//     Customer.find().then((customers) => {
-//         res.json(customers)
-//     }).catch((err) => {
-//         if(err) {
-//             throw err;
-//         }
-//     })
-// })
+app.get('/orders', (req, res) => {
+    Order.find().then((orders) => {
+        res.json(orders)
+    }).catch((err) => {
+        if(err) {
+            throw err;
+        }
+    })
+})
+
+app.delete('/order/:id', (req, res) => { 
+    Order.findOneAndRemove(req.params.id).then(() => {
+        res.send("Order has been successfully removed!")
+    })
+})
 
 
 // app .get('/customer/:id', (req, res) => { 
@@ -74,8 +80,4 @@ app.listen(PORT, () => {
 //     })
 // })
 
-// app.delete('/customer/:id', (req, res) => { 
-//     Customer.findOneAndRemove(req.params.id).then(() => {
-//         res.send("Customer has been successfully removed!")
-//     })
-// })
+

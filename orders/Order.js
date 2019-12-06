@@ -1,13 +1,13 @@
 const mongoose = require("mongoose");
 
-var Schema = mongoose.Schema;
-CustomerID = Schema.CustomerID;
+// var Schema = mongoose.Schema;
+// CustomerID = Schema.objectId;
 
 mongoose.model("Order", {
 
     CustomerID: {
         type: String,
-        // type: CustomerID,
+        // type: mongoose.Schema.objectId,
         required: true
     },
     BookID: {
