@@ -4,6 +4,7 @@ const path = require('path')
 const { Pool } = require('pg');
 const bodyParser = require(`body-parser`);
 const mongoose = require('mongoose');
+var orders2 = require('./orders/orders2');
 // const customers = require("./customers/customers");
 
 mongoose.connect("mongodb+srv://testuser:testpassword@cluster0-fnurh.mongodb.net/test", () => {
@@ -35,6 +36,7 @@ express()
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.render('pages/index'))
+  .use('/', orders2)
   .delete('/book/:id', (req, res) => { 
     Book.findOneAndRemove(req.params.id).then(() => {
         res.send("Book has been successfully removed!")
