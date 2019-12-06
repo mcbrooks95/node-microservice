@@ -1,7 +1,6 @@
 const cool = require('cool-ascii-faces')
 const express = require('express')
 const path = require('path')
-const { Pool } = require('pg');
 const bodyParser = require(`body-parser`);
 const mongoose = require('mongoose');
 var orders2 = require('./orders/orders2');
@@ -10,12 +9,6 @@ var orders = require('./orders/orders');
 mongoose.connect("mongodb+srv://testuser:testpassword@cluster0-fnurh.mongodb.net/test", () => {
   console.log("database is connected!");
 })
-const pool = new Pool({
-  connectionString: "postgres://sfpbzylfgkxmwn:1c05515cd61b6f52018402d488250ce850be16a115c401af8988f6e40005b89b@ec2-174-129-255-106.compute-1.amazonaws.com:5432/d31sdj5qhk8k8s",
-  // ssl: false
-  ssl: true
-});
-
 
 const PORT = process.env.PORT || 5000
 
@@ -75,18 +68,6 @@ express()
       })
 
       res.send("a new book created with success!")
-  })
-  .get('/db', async (req, res) => {
-    try {
-      const client = await pool.connect()
-      const result = await client.query('SELECT * FROM test_table');
-      const results = { 'results': (result) ? result.rows : null};
-      res.render('pages/db', results );
-      client.release();
-    } catch (err) {
-      console.error(err);
-      res.send("Error " + err);
-    }
   })
   .get('/times', (req, res) => res.send(showTimes()))
   .get('/cool', (req, res) => res.send(cool()))
