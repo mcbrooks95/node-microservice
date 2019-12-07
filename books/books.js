@@ -50,9 +50,10 @@ app.get('/books', (req, res) => {
     })
   })
 
-  app.delete('/book/:id', (req, res) => { 
-    Book.findOneAndRemove(req.params.id).then(() => {
-        res.send("Book has been successfully removed!")
+  app.delete('/book/:id', (req, res) => {
+    bookRequester.send({ type: "delete", id: req.params.id})
+    .then(() => {
+        res.send("Book has been successfully removed!!");
     })
   })
 
@@ -67,6 +68,15 @@ bookResponder.on("list", req => {
                 return null;
             })
         )
+})
+
+bookResponder.on("delete", req => {
+    return Promise.resolve(        
+        Book.findOneAndRemove(req.id)
+        .then(() => {
+            return null;
+        })
+    )
 })
 
 module.exports = app;
