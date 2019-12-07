@@ -11,21 +11,12 @@ app.use(bodyParser.json());
 const bookRequester = new cote.Requester({ name: 'Book Requester'})
 const bookResponder = new cote.Responder({ name: 'Book Responder'})
 
-app.post('/book', (req, res) => { 
-    var newBook = {
-      title: req.body.title,
-      author: req.body.author,
-      numberPages: req.body.numberPages,
-      publisher: req.body.publisher
-    }
-
-    var book = new Book(newBook);
-
-    book.save().then(() => {
-      console.log("new book created")
+app.post('/book', (req, res) => {
+    bookRequester.send({ type: "post", body: req.body})
+    .then((book) => {
+        console.log(`in then statement`)
+        res.json(book).status(200);
     })
-
-    res.send("a new book created with success!")
 })
 
 app.get('/book/:id', (req, res) => { 
@@ -85,6 +76,20 @@ bookResponder.on("get", req => {
                 throw err;
             }
         })
+    )
+})
+
+bookResponder.on("post", req => {
+    return Promise.resolve(
+        new Book({
+                title: req.body.title,
+                author: req.body.author,
+                numberPages: req.body.numberPages,
+                publisher: req.body.publisher
+            }).save().then((book) => {
+                    console.log("just saved book created")
+                    return book
+            })
     )
 })
 
