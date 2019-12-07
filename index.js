@@ -11,26 +11,26 @@ mongoose.connect("mongodb+srv://testuser:testpassword@cluster0-fnurh.mongodb.net
   console.log("database is connected!");
 })
 
-const bloodResponder = new cote.Responder({ name: 'blood Responder'})
+// const bloodResponder = new cote.Responder({ name: 'blood Responder'})
 // const patientRequester = new cote.Requester({ name: 'Patient Requester'})
-const blood = [
-  {
-    blood_type: "A+",
-    count: 10
-  },
-  {
-    blood_type: "A-",
-    count: 15
-  },
-  {
-    blood_type: "AB+",
-    count: 5
-  }
-]
+// const blood = [
+//   {
+//     blood_type: "A+",
+//     count: 10
+//   },
+//   {
+//     blood_type: "A-",
+//     count: 15
+//   },
+//   {
+//     blood_type: "AB+",
+//     count: 5
+//   }
+// ]
 
-bloodResponder.on("list", req => {
-  return Promise.resolve(blood);
-})
+// bloodResponder.on("list", req => {
+//   return Promise.resolve(blood);
+// })
 
 
 const PORT = process.env.PORT || 5000
