@@ -29,20 +29,11 @@ app.post('/book', (req, res) => {
 })
 
 app.get('/book/:id', (req, res) => { 
-    Book.findById(req.params.id).then((book) => {
-        if(book) {
-          res.json(book);
-        }
-        else
-        {
-          res.sendStatus(404);
-        }
-    }).catch((err) => {
-        if(err) {
-          throw err;
-        }
+    bookRequester.send({ type: "get", id: req.params.id})
+    .then((book) => {
+        res.json(book).status(200);
     })
-  })
+})
 
 app.get('/books', (req, res) => {
     bookRequester.send({ type: "list"}).then((books) => {
@@ -75,6 +66,24 @@ bookResponder.on("delete", req => {
         Book.findOneAndRemove(req.id)
         .then(() => {
             return null;
+        })
+    )
+})
+
+bookResponder.on("get", req => {
+    return Promise.resolve(
+        Book.findById(req.id).then((book) => {
+            if(book) {
+                return book;
+            }
+            else
+            {
+                res.sendStatus(404);
+            }
+        }).catch((err) => {
+            if(err) {
+                throw err;
+            }
         })
     )
 })
