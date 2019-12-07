@@ -8,7 +8,6 @@ const cote = require('cote');
 
 app.use(bodyParser.json());
 
-// const patientRequester = new cote.Requester({ name: 'Patient Requester'})
 const bookRequester = new cote.Requester({ name: 'Book Requester'})
 const bookResponder = new cote.Responder({ name: 'Book Responder'})
 
@@ -45,36 +44,11 @@ app.get('/book/:id', (req, res) => {
     })
   })
 
-app.get('/books', (req, res) => { 
-    // Book.find().then((books) => {
-    //   res.json(books);
-    // }).catch((err) => {
-    //   if(err) {
-    //     throw err;
-    //   }
-    // })
-
-    console.log(`in get /books`)
+app.get('/books', (req, res) => {
     bookRequester.send({ type: "list"}).then((books) => {
-        console.log(`abot to print books`)
-        console.log(books)
         res.json(books).status(200);
     })
-
-    // const response = await bookRequester.send({ type: "list"});
-    // console.log(`got response`)
-    // console.log(response)
   })
-
-//   app.get('/bookpatient', (req, res) => {
-      
-//     // const patients = await patientRequester.send({ type: "list"})
-//     patientRequester.send({ type: "list"}).then((patients) => {
-        
-//         res.json(patients).status(200)
-//     })
-//     // res.json(patients).status(200)
-//   })
 
   app.delete('/book/:id', (req, res) => { 
     Book.findOneAndRemove(req.params.id).then(() => {
@@ -82,21 +56,10 @@ app.get('/books', (req, res) => {
     })
   })
 
-
-// bookRequester.send({ type: "list"}).then((books) => {
-//     res.json(books).status(200);
-// })
-
 bookResponder.on("list", req => {
-    // Promise.resolve(
-        // console.log(`in book responder`)
-        // return Promise.resolve(blood);
         return Promise.resolve(
             Book.find().then((books) => {
-                console.log(`found the books`)
-                console.log(books)
                 return books;
-                // return books;
             }).catch((err) => {
                 if(err) {
                     throw err;            
@@ -104,7 +67,6 @@ bookResponder.on("list", req => {
                 return null;
             })
         )
-    // )
 })
 
 module.exports = app;
