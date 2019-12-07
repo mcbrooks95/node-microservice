@@ -12,7 +12,7 @@ mongoose.connect("mongodb+srv://testuser:testpassword@cluster0-fnurh.mongodb.net
 })
 
 const bloodResponder = new cote.Responder({ name: 'blood Responder'})
-const patientRequester = new cote.Requester({ name: 'Patient Requester'})
+// const patientRequester = new cote.Requester({ name: 'Patient Requester'})
 const blood = [
   {
     blood_type: "A+",
@@ -41,10 +41,10 @@ express()
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.render('pages/index'))
-  .get("/patients", async function(req, res) {
-    const patients = await patientRequester.send({ type: "list"})
-    res.json(patients).status(200)
-  })
+  // .get("/patients", async function(req, res) {
+  //   const patients = await patientRequester.send({ type: "list"})
+  //   res.json(patients).status(200)
+  // })
   .use('/', orders)
   .use('/', customers)
   .use('/', books)

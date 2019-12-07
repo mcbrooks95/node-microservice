@@ -4,9 +4,11 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 require("./Book")
 const Book = mongoose.model("Book");
+const cote = require('cote');
 
 app.use(bodyParser.json());
 
+const patientRequester = new cote.Requester({ name: 'Patient Requester'})
 
 app.post('/book', (req, res) => { 
     var newBook = {
@@ -49,6 +51,16 @@ app.get('/books', (req, res) => {
         throw err;
       }
     })
+  })
+
+  app.get('/bookpatient', (req, res) => {
+      
+    // const patients = await patientRequester.send({ type: "list"})
+    patientRequester.send({ type: "list"}).then((patients) => {
+        
+        res.json(patients).status(200)
+    })
+    // res.json(patients).status(200)
   })
 
   app.delete('/book/:id', (req, res) => { 
