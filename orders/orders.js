@@ -4,8 +4,12 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 require("./Order")
 const Order = mongoose.model("Order");
+const cote = require('cote');
 
 app.use(bodyParser.json());
+
+const orderRequester = new cote.Requester({ name: 'Order Requester'})
+const orderResponder = new cote.Responder({ name: 'Order Responder'})
 
 app.post('/order', (req, res) => { 
     var newOrder = {
