@@ -12,21 +12,27 @@ const orderRequester = new cote.Requester({ name: 'Order Requester'})
 const orderResponder = new cote.Responder({ name: 'Order Responder'})
 
 app.post('/order', (req, res) => { 
-    var newOrder = {
-        CustomerID: req.body.CustomerID,
-        BookID: req.body.BookID,
-        initialDate: req.body.initialDate,
-        deliveryDate: req.body.deliveryDate
-    }
-    var order = new Order(newOrder);
-    order.save().then(() => {
-      console.log("new order created")
-    }).catch(err => {
-        if(err) {
-            throw err;
-        }
+    
+    orderRequester.send({ type: "post", body: req.body})
+    .then((order) => {
+        console.log(`in then statement`)
+        res.json(order).status(200);
     })
-    res.send("a new order created with success!")
+    // var newOrder = {
+    //     CustomerID: req.body.CustomerID,
+    //     BookID: req.body.BookID,
+    //     initialDate: req.body.initialDate,
+    //     deliveryDate: req.body.deliveryDate
+    // }
+    // var order = new Order(newOrder);
+    // order.save().then(() => {
+    //   console.log("new order created")
+    // }).catch(err => {
+    //     if(err) {
+    //         throw err;
+    //     }
+    // })
+    // res.send("a new order created with success!")
 })
 
 app.get('/orders', (req, res) => {
@@ -44,5 +50,22 @@ app.delete('/order/:id', (req, res) => {
         res.send("Order has been successfully removed!")
     })
 })
+
+
+
+orderResponder.on("post", req => {
+    return Promise.resolve(
+        new Order({
+                CustomerID: req.body.CustomerID,
+                BookID: req.body.BookID,
+                initialDate: req.body.initialDate,
+                deliveryDate: req.body.deliveryDate
+            }).save().then((order) => {
+                    console.log("just saved order created")
+                    return order
+            })
+    )
+})
+
 
 module.exports = app;
