@@ -26,8 +26,9 @@ app.get('/orders', (req, res) => {
 })
 
 app.delete('/order/:id', (req, res) => { 
-    Order.findOneAndRemove(req.params.id).then(() => {
-        res.send("Order has been successfully removed!")
+    orderRequester.send({ type: "delete", id: req.params.id})
+    .then(() => {
+        res.send("Order has been successfully removed!!");
     })
 })
 
@@ -40,6 +41,15 @@ orderResponder.on("list", req => {
             if(err) {
                 throw err;            
             }
+            return null;
+        })
+    )
+})
+
+orderResponder.on("delete", req => {
+    return Promise.resolve(        
+        Order.findOneAndRemove(req.id)
+        .then(() => {
             return null;
         })
     )
