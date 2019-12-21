@@ -19,6 +19,25 @@ bookResponder.on("booklist", req => {
     )
 })
 
+bookResponder.on("bookget", req => {
+    return Promise.resolve(
+        Book.findById(req.body).then((book) => {
+            if(book) {
+                return(book);
+            }
+            else
+            {
+                return(null);
+            }
+        }).catch((err) => {
+            if(err) {
+                res.send("sorry something went wrong")
+                throw err;
+            }
+        })
+    )
+})
+
 bookResponder.on("bookdelete", req => {
     return Promise.resolve(        
         Book.findOneAndRemove(req.id)

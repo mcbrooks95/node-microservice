@@ -14,7 +14,7 @@ app.post('/book', (req, res) => {
 })
 
 app.get('/book/:id', (req, res) => { 
-    bookCote.Requester.send({ type: "bookget", id: req.params.id})
+    bookCote.Requester.send({ type: "bookget", body: req.params.id})
     .then((book) => {
         res.json(book).status(200);
     })
