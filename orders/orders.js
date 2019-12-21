@@ -25,6 +25,13 @@ app.get('/orders', (req, res) => {
     })
 })
 
+app.get('/order/:id', (req, res) => {    
+    orderCote.Requester.send({ type: "orderget", body: req.params.id})
+    .then((order) => {
+        res.json(order).status(200);
+    })
+})
+
 app.delete('/order/:id', (req, res) => { 
     orderCote.Requester.send({ type: "orderdelete", id: req.params.id})
     .then(() => {

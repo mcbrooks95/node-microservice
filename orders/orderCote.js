@@ -19,6 +19,27 @@ orderResponder.on("orderlist", req => {
     )
 })
 
+
+orderResponder.on("orderget", req => {
+    return Promise.resolve(
+        Order.findById(req.body).then((order) => {
+            if(order) {
+                return(order);
+            }
+            else
+            {
+                return(null);
+            }
+        }).catch((err) => {
+            if(err) {
+                res.send("sorry something went wrong")
+                throw err;
+            }
+        })
+    )
+})
+
+
 orderResponder.on("orderdelete", req => {
     return Promise.resolve(        
         Order.findOneAndRemove(req.id)
