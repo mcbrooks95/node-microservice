@@ -8,13 +8,13 @@ const customerResponder = new cote.Responder({ name: 'Customer Responder', key: 
 
 customerResponder.on("customerget", req => {
     return Promise.resolve(
-        Customer.findById(req.params.id).then((customer) => {
+        Customer.findById(req.body).then((customer) => {
             if(customer) {
-                res.json(customer);
+                return(customer);
             }
             else
             {
-                res.sendStatus("wrong status id sorry!!");
+                return(null);
             }
         }).catch((err) => {
             if(err) {

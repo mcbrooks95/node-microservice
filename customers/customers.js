@@ -1,64 +1,35 @@
 const express = require("express")
 const app = express.Router();
-const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 require("./Customer")
-const Customer = mongoose.model("Customer");
+const customerCote = require('./customerCote.js');
 
 app.use(bodyParser.json());
 
-app.post('/customer', (req, res) => { 
-    var newCustomer = {
-      name: req.body.name,
-      age: req.body.age,
-      address: req.body.address
-    }
-
-    var customer = new Customer(newCustomer);
-
-    customer.save().then(() => {
-      console.log("new customer created")
-    }).catch(err => {
-        if(err) {
-            throw err;
-        }
+app.post('/customer', (req, res) => {
+    customerCote.Requester.send({ type: "customerpost", body: req.body})
+    .then((customer) => {
+        res.json(customer).status(200);
     })
-
-    res.send("a new customer created with success!")
 })
-
 
 app.get('/customers', (req, res) => {
-    Customer.find().then((customers) => {
-        res.json(customers)
-    }).catch((err) => {
-        if(err) {
-            throw err;
-        }
+    customerCote.Requester.send({ type: "customerlist"}).then((customers) => {
+        res.json(customers).status(200);
     })
 })
 
-
-app.get('/customer/:id', (req, res) => { 
-    Customer.findById(req.params.id).then((customer) => {
-        if(customer) {
-            res.json(customer);
-        }
-        else
-        {
-            res.sendStatus("wrong status id sorry!!");
-        }
-    }).catch((err) => {
-        if(err) {
-            res.send("sorry something went wrong")
-            throw err;
-        }
+app.get('/customer/:id', (req, res) => {    
+    customerCote.Requester.send({ type: "customerget", body: req.params.id})
+    .then((customer) => {
+        res.json(customer).status(200);
     })
 })
 
 app.delete('/customer/:id', (req, res) => { 
-    Customer.findOneAndRemove(req.params.id).then(() => {
-        res.send("Customer has been successfully removed!")
+    customerCote.Requester.send({ type: "customerdelete", id: req.params.id})
+    .then(() => {
+        res.send("Customer has been successfully removed!");
     })
 })
 
