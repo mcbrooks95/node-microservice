@@ -3,10 +3,10 @@ const cote = require('cote');
 require("./Order")
 const mongoose = require("mongoose");
 const Order = mongoose.model("Order");
-const orderRequester = new cote.Requester({ name: 'Order Requester'})
-const orderResponder = new cote.Responder({ name: 'Order Responder'})
+const orderRequester = new cote.Requester({ name: 'Order Requester', key: 'order'})
+const orderResponder = new cote.Responder({ name: 'Order Responder', key: 'order'})
 
-orderResponder.on("list", req => {
+orderResponder.on("orderlist", req => {
     return Promise.resolve(
         Order.find().then((orders) => {
             return orders;
@@ -19,7 +19,7 @@ orderResponder.on("list", req => {
     )
 })
 
-orderResponder.on("delete", req => {
+orderResponder.on("orderdelete", req => {
     return Promise.resolve(        
         Order.findOneAndRemove(req.id)
         .then(() => {
@@ -28,7 +28,7 @@ orderResponder.on("delete", req => {
     )
 })
 
-orderResponder.on("post", req => {
+orderResponder.on("orderpost", req => {
     return Promise.resolve(
         new Order({
                 CustomerID: req.body.CustomerID,

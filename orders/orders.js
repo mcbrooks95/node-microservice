@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 // const orderResponder = new cote.Responder({ name: 'Order Responder'})
 
 app.post('/order', (req, res) => {     
-    orderCote.Requester.send({ type: "post", body: req.body})
+    orderCote.Requester.send({ type: "orderpost", body: req.body})
     .then((order) => {
         console.log(`in then statement`)
         res.json(order).status(200);
@@ -22,13 +22,13 @@ app.post('/order', (req, res) => {
 })
 
 app.get('/orders', (req, res) => {
-    orderCote.Requester.send({ type: "list"}).then((orders) => {
+    orderCote.Requester.send({ type: "orderlist"}).then((orders) => {
         res.json(orders).status(200);
     })
 })
 
 app.delete('/order/:id', (req, res) => { 
-    orderCote.Requester.send({ type: "delete", id: req.params.id})
+    orderCote.Requester.send({ type: "orderdelete", id: req.params.id})
     .then(() => {
         res.send("Order has been successfully removed!!");
     })

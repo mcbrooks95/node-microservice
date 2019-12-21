@@ -8,11 +8,11 @@ const cote = require('cote');
 
 app.use(bodyParser.json());
 
-const bookRequester = new cote.Requester({ name: 'Book Requester'})
-const bookResponder = new cote.Responder({ name: 'Book Responder'})
+const bookRequester = new cote.Requester({ name: 'Book Requester', key: 'book'})
+const bookResponder = new cote.Responder({ name: 'Book Responder', key: 'book'})
 
 app.post('/book', (req, res) => {
-    bookRequester.send({ type: "post", body: req.body})
+    bookRequester.send({ type: "bookpost", body: req.body})
     .then((book) => {
         console.log(`in then statement`)
         res.json(book).status(200);
@@ -20,26 +20,26 @@ app.post('/book', (req, res) => {
 })
 
 app.get('/book/:id', (req, res) => { 
-    bookRequester.send({ type: "get", id: req.params.id})
+    bookRequester.send({ type: "bookget", id: req.params.id})
     .then((book) => {
         res.json(book).status(200);
     })
 })
 
 app.get('/books', (req, res) => {
-    bookRequester.send({ type: "list"}).then((books) => {
+    bookRequester.send({ type: "booklist"}).then((books) => {
         res.json(books).status(200);
     })
   })
 
   app.delete('/book/:id', (req, res) => {
-    bookRequester.send({ type: "delete", id: req.params.id})
+    bookRequester.send({ type: "bookdelete", id: req.params.id})
     .then(() => {
         res.send("Book has been successfully removed!!");
     })
   })
 
-bookResponder.on("list", req => {
+bookResponder.on("booklist", req => {
         return Promise.resolve(
             Book.find().then((books) => {
                 return books;
@@ -52,7 +52,7 @@ bookResponder.on("list", req => {
         )
 })
 
-bookResponder.on("delete", req => {
+bookResponder.on("bookdelete", req => {
     return Promise.resolve(        
         Book.findOneAndRemove(req.id)
         .then(() => {
@@ -61,7 +61,7 @@ bookResponder.on("delete", req => {
     )
 })
 
-bookResponder.on("get", req => {
+bookResponder.on("bookget", req => {
     return Promise.resolve(
         Book.findById(req.id).then((book) => {
             if(book) {
@@ -79,7 +79,7 @@ bookResponder.on("get", req => {
     )
 })
 
-bookResponder.on("post", req => {
+bookResponder.on("bookpost", req => {
     return Promise.resolve(
         new Book({
                 title: req.body.title,
