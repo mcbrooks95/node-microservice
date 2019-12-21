@@ -31,9 +31,9 @@ bookResponder.on("bookget", req => {
             }
         }).catch((err) => {
             if(err) {
-                res.send("sorry something went wrong")
-                throw err;
+                return(null);
             }
+            return(null);
         })
     )
 })

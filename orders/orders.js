@@ -9,14 +9,25 @@ const bookCote = require('../books/bookCote.js');
 app.use(bodyParser.json());
 
 app.post('/order', (req, res) => {     
-    // bookCote.Requester.send({ type: "booklist" })
-    // .then((book) => {
-    //     res.json(book).status(200);
-    // })
-    orderCote.Requester.send({ type: "orderpost", body: req.body})
-    .then((order) => {
-        res.json(order).status(200);
+    // bookCote.Requester.send({ type: "bookget", body: req.body.BookID })
+    bookCote.Requester.send({ type: "bookget", body: req.body.BookID })
+    .then((book) => {
+        console.log("in then book statement")
+        console.log(book)
+        if(book) {
+            orderCote.Requester.send({ type: "orderpost", body: req.body})
+            .then((order) => {
+                res.json(order).status(200);
+            })
+        }
+        else {
+            res.json(book).status(200);
+        }
     })
+    // orderCote.Requester.send({ type: "orderpost", body: req.body})
+    // .then((order) => {
+    //     res.json(order).status(200);
+    // })
 })
 
 app.get('/orders', (req, res) => {
