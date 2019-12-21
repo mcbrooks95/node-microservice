@@ -31,10 +31,10 @@ bookResponder.on("bookdelete", req => {
 bookResponder.on("bookpost", req => {
     return Promise.resolve(
         new Book({
-                CustomerID: req.body.CustomerID,
-                BookID: req.body.BookID,
-                initialDate: req.body.initialDate,
-                deliveryDate: req.body.deliveryDate
+                title: req.body.title,
+                author: req.body.author,
+                numberPages: req.body.numberPages,
+                publisher: req.body.publisher
             }).save().then((book) => {
                     console.log("just saved book created")
                     return book
