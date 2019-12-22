@@ -6,11 +6,12 @@ require("./Book")
 const mongoose = require("mongoose");
 const Book = mongoose.model("Book");
 // const mongoose = require("mongoose");
+const cors = require('cors')
 
 app.use(bodyParser.json());
 
 
-app.get('/books', (req, res) => {
+app.get('/books', cors(), (req, res) => {
     Book.find().then((books) => {
         res.json(books).status(200);
     }).catch((err) => {
