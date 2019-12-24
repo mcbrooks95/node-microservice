@@ -22,6 +22,25 @@ app.get('/books', cors(), (req, res) => {
     })
   })
 
+app.put('/book/:id', cors(), (req, res) => {
+    Book.findOneAndUpdate({ _id: req.params.id}, 
+        {
+            title: req.body.title,
+            author: req.body.author,
+            numberPages: req.body.numberPages,
+            publisher: req.body.publisher
+        },
+        { new: true }
+     ).then((book) => {
+        res.json(book).status(200);
+    }).catch((err) => {
+        if(err) {
+            throw err;            
+        }
+        res.json(null).status(404);
+    })
+})
+
 // app.post('/book', (req, res) => {
 //     bookCote.Requester.send({ type: "bookpost", body: req.body})
 //     .then((book) => {
