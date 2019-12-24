@@ -12,6 +12,12 @@ mongoose.connect("mongodb+srv://testuser:testpassword@cluster0-fnurh.mongodb.net
 const PORT = process.env.PORT || 5000
 
 express()
+  .use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
+        next();
+  })
   .use(express.static(path.join(__dirname, 'public')))
   .use(bodyParser.json())
   .set('views', path.join(__dirname, 'views'))
