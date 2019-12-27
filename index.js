@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 // var orders = require('./orders/orders');
 // var customers = require('./customers/customers');
 var books = require('./books/books');
+var users = require('./users/users');
 
 mongoose.connect("mongodb+srv://testuser:testpassword@cluster0-fnurh.mongodb.net/test", () => {
   console.log("database is connected!");
@@ -26,4 +27,5 @@ express()
   // .use('/', orders)
   // .use('/', customers)
   .use('/', books)
+  .use('/', users)
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
