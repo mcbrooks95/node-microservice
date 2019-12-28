@@ -60,10 +60,17 @@ app.post('/post', (req, res) => {
 
 app.put('/post/:id/upvote/:userId', cors(), (req, res) => {
     Post.findOne({ _id: req.params.id})
+    // .then((post) => {
+    //     return post.upvotes
+    // })
     .then((post) => {
-        return post.upvotes
-    })
-    .then((upvotes) => {
+            downvotes = post.downvotes
+            upvotes = post.upvotes
+
+            if(downvotes.includes(req.params.userId))
+            {
+                downvotes = downvotes.filter((i) => { return i != req.params.userId })
+            }
 
             if(upvotes.includes(req.params.userId))
             {
@@ -75,7 +82,8 @@ app.put('/post/:id/upvote/:userId', cors(), (req, res) => {
             }
         Post.findOneAndUpdate({ _id: req.params.id}, 
             {
-                upvotes: upvotes
+                upvotes: upvotes,
+                downvotes: downvotes
             },
             { new: true }
          ).then((post) => {
@@ -92,10 +100,23 @@ app.put('/post/:id/upvote/:userId', cors(), (req, res) => {
 
 app.put('/post/:id/downvote/:userId', cors(), (req, res) => {
     Post.findOne({ _id: req.params.id})
-    .then((post) => {
-        return post.downvotes
-    })
-    .then((downvotes) => {
+    // .then((post) => {
+    //     return post.downvotes
+    // })
+    .then((post) => {   
+            console.log("about to print post")
+            console.log(post)
+            downvotes = post.downvotes
+            upvotes = post.upvotes
+            console.log("about to print downvotes")
+            console.log(downvotes)
+
+            if(upvotes.includes(req.params.userId))
+            {
+                upvotes = upvotes.filter((i) => { return i != req.params.userId })
+            }
+            console.log("about to print upvotes")
+            console.log(upvotes)
 
             if(downvotes.includes(req.params.userId))
             {
@@ -105,9 +126,13 @@ app.put('/post/:id/downvote/:userId', cors(), (req, res) => {
             {
                 downvotes.push(req.params.userId)
             }
+            
+            console.log("about to print downvotes")
+            console.log(downvotes)
         Post.findOneAndUpdate({ _id: req.params.id}, 
             {
-                downvotes: downvotes
+                downvotes: downvotes,
+                upvotes: upvotes
             },
             { new: true }
          ).then((post) => {
