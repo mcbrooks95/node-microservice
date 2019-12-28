@@ -59,18 +59,9 @@ app.post('/post', (req, res) => {
 })
 
 app.put('/post/:id/upvote/:userId', cors(), (req, res) => {
-
     Post.findOne({ _id: req.params.id})
     .then((post) => {
-        console.log("just got post about to print post")
-        console.log(post)
-        upvotes = post.upvotes
-        console.log("just got upvotes about to print upvotes")
-        console.log(upvotes)
-
-        console.log("just got upvotes.includes")
-        console.log(upvotes.includes(req.params.userId))
-        return upvotes
+        return post.upvotes
     })
     .then((upvotes) => {
 
@@ -95,12 +86,39 @@ app.put('/post/:id/upvote/:userId', cors(), (req, res) => {
             }
             res.json(null).status(404);
         })
+    })    
+})
 
 
-
+app.put('/post/:id/downvote/:userId', cors(), (req, res) => {
+    Post.findOne({ _id: req.params.id})
+    .then((post) => {
+        return post.downvotes
     })
+    .then((downvotes) => {
 
-    
+            if(downvotes.includes(req.params.userId))
+            {
+                downvotes = downvotes.filter((i) => { return i != req.params.userId })
+            }
+            else
+            {
+                downvotes.push(req.params.userId)
+            }
+        Post.findOneAndUpdate({ _id: req.params.id}, 
+            {
+                downvotes: downvotes
+            },
+            { new: true }
+         ).then((post) => {
+            res.json(post).status(200);
+        }).catch((err) => {
+            if(err) {
+                throw err;            
+            }
+            res.json(null).status(404);
+        })
+    })    
 })
 
 module.exports = app;
