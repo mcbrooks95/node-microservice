@@ -44,14 +44,14 @@ app.put('/post/:id', cors(), (req, res) => {
 app.post('/post', (req, res) => {
 
     new Post({
-        title: "firstPost",
-        category: "interesting",
-        content: "this is the very first post of this site!",
+        title: req.body.title,
+        category: req.body.category,
+        content: req.body.content,
         datePosted: Date.now(),
-        contactPosterId: "5e06c50bcb42dd26fc548717",
-        upvotes: ["5e066b052ff4171d3cd2c5dd", "5e066b482ff4171d3cd2c5de"],
-        downvotes: ["5e06c50bcb42dd26fc548717"],
-        contactPosterUserName: "fdasdf3333"
+        contactPosterId: req.body.contactPosterId,
+        upvotes: [],
+        downvotes: [],
+        contactPosterUserName: req.body.contactPosterUserName,
     }).save().then((post) => {
         console.log("just saved post created")
         res.json(post).status(200);
