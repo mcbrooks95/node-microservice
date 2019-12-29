@@ -53,12 +53,29 @@ app.post('/user', (req, res) => {
     })
 })
 
-// app.get('/book/:id', (req, res) => { 
-//     bookCote.Requester.send({ type: "bookget", body: req.params.id})
-//     .then((book) => {
-//         res.json(book).status(200);
-//     })
-// })
+app.get('/user/:id', (req, res) => { 
+
+    return Promise.resolve(
+        User.findById(req.params.id).then((user) => {
+            if(user) {
+                res.json(user).status(200);
+            }
+            else
+            {
+                res.json(null).status(404);
+            }
+        }).catch((err) => {
+            if(err) {
+                res.json(null).status(404);
+            }
+            res.json(null).status(404);
+        })
+    )
+    // bookCote.Requester.send({ type: "bookget", body: req.params.id})
+    // .then((book) => {
+    //     res.json(book).status(200);
+    // })
+})
 
 // app.get('/books', (req, res) => {
 //     bookCote.Requester.send({ type: "booklist"}).then((books) => {
