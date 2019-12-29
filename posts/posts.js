@@ -22,6 +22,26 @@ app.get('/posts', cors(), (req, res) => {
     })
   })
 
+app.get('/post/:id', (req, res) => { 
+
+    return Promise.resolve(
+        Post.findById(req.params.id).then((post) => {
+            if(post) {
+                res.json(post).status(200);
+            }
+            else
+            {
+                res.json(null).status(404);
+            }
+        }).catch((err) => {
+            if(err) {
+                res.json(null).status(404);
+            }
+            res.json(null).status(404);
+        })
+    )
+})
+
 app.put('/post/:id', cors(), (req, res) => {
     Post.findOneAndUpdate({ _id: req.params.id}, 
         {
