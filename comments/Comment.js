@@ -12,7 +12,7 @@ mongoose.model("Comment", {
     },
     replyingToCommentId: {
       type: String,
-      required: true
+      required: false
     },
     contactPosterId: {
       type: String,
