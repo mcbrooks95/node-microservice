@@ -60,9 +60,9 @@ app.post('/comment', (req, res) => {
 })
 
 app.delete('/comment/:id', (req, res) => { 
-    Customer.findOneAndRemove(req.id)
-    .then(() => {
-        return null;
+    Comment.findOneAndDelete(req.params.id)
+    .then((comment) => {
+        return res.json(comment);
     })
 })
 
