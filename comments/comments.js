@@ -59,5 +59,12 @@ app.post('/comment', (req, res) => {
     })
 })
 
+app.delete('/comment/:id', (req, res) => { 
+    Customer.findOneAndRemove(req.id)
+    .then(() => {
+        return null;
+    })
+})
+
 
 module.exports = app;
